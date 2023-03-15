@@ -1,7 +1,11 @@
 import { HttpService } from '@nestjs/axios/dist';
-import { Injectable } from '@nestjs/common';
+import {
+  Injectable,
+  HttpException,
+  HttpStatus,
+} from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { map } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 export interface Committer {
   name: string;
   email: string;
@@ -12,7 +16,6 @@ export interface Commit {
   url: string;
   comment_count: number;
   committer: Committer;
-
 }
 export interface GitHubResponse {
   sha: string;
@@ -27,7 +30,16 @@ export class GithubService {
     private readonly httpService: HttpService,
   ) {}
   fetchCommits() {
+    //Note: this can be refactor and move the logic inside a
+    //try catch and then use a DTO to seralize the response
+    //But for this simple API, i think RXJS make it simpler for this case
     return this.httpService.get(this.COMMITS_URL).pipe(
+      catchError((err) => {
+        throw new HttpException(
+          err.response?.data?.message || 'Contact the server admin',
+          err?.response?.status || HttpStatus.INTERNAL_SERVER_ERROR,
+        );
+      }),
       //Get the data from the body
       map((response) => response['data']),
       //Map the response
