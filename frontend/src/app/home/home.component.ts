@@ -15,8 +15,8 @@ import { RouterModule } from '@angular/router';
           <img src="/assets/fulltimeforcelogo.png" />
         </ion-avatar>
         <ion-title class="ion-text-center">Testing APP </ion-title>
-        <ion-buttons slot="end">
-          <ion-button (click)="loadCommits()">
+        <ion-buttons slot="end" >
+          <ion-button (click)="loadCommits()" color="primary">
             <ion-icon name="refresh-outline"></ion-icon>
             Refresh
           </ion-button>
@@ -51,8 +51,8 @@ import { RouterModule } from '@angular/router';
               <ion-col size="12">
                 <h2>Lists of commits</h2>
                 <small
-                  >This will display all the commits of
-                  https://github.com/zezei/fulltimeforce-test repository</small
+                  >Commits of
+                  https://github.com/zezei/fulltimeforce-test repository. Click on one to see more details.</small
                 >
               </ion-col>
             </ion-row>
@@ -71,9 +71,8 @@ import { RouterModule } from '@angular/router';
                 ></ion-label>
               </ion-item>
             </ion-list>
-            <ion-spinner name="bubbles" *ngIf="vm.isLoading"></ion-spinner>
-            <ion-list *ngIf="vm.commits.length; else triggerRefresh">
-              <ion-item *ngFor="let commit of vm.commits" class="ion-margin">
+            <ion-list *ngIf="vm.commits.length && !vm.isLoading; else triggerRefresh">
+              <ion-item *ngFor="let commit of vm.commits" class="ion-margin" button>
                 <ion-label text-wrap
                   >{{ commit.message }}
                   <p>{{ commit.date | date : 'dd/MM/YYYY HH:MM' }}</p>
@@ -83,7 +82,7 @@ import { RouterModule } from '@angular/router';
             <ng-template #triggerRefresh>
               <ion-item *ngIf="!vm.isLoading" lines="none">
                 <ion-label text-wrap class="ion-text-center"
-                  >To obtain the commits please click on refresh button
+                  >To obtain the commits please click on the refresh button
                   <ion-icon name="refresh-outline"></ion-icon
                 ></ion-label>
               </ion-item>
@@ -120,13 +119,14 @@ export class HomeComponent {
 
   vm$ = combineLatest([
     this.githubService.getCommits().pipe(startWith([])),
-    this.githubService.isLoading$.pipe(startWith(false)),
+    this.githubService.getLoadingStatus().pipe(startWith(false)),
   ]).pipe(map(([commits, isLoading]) => ({ commits, isLoading })));
   constructor(private githubService: GithubService) {}
 
   loadCommits() {
-    this.githubService.refresh$.next(true);
+    this.githubService.refresh()
   }
+
 }
 
 @NgModule({

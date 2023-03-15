@@ -20,13 +20,17 @@ export interface Commit {
 }
 @Injectable({ providedIn: 'root' })
 export class GithubService {
-  refresh$ = new BehaviorSubject<boolean>(false);
-  isLoading$ = new BehaviorSubject<boolean>(false);
+  private refresh$ = new BehaviorSubject<boolean>(false);
+  private isLoading$ = new BehaviorSubject<boolean>(false);
   constructor(private http: HttpClient, private guiService: GuiService) {}
 
   private resetStreamToDefaultValues() {
     this.refresh$.next(false);
     this.isLoading$.next(false);
+  }
+
+  refresh(){
+    this.refresh$.next(true);
   }
   getCommits() {
     return this.refresh$.pipe(
@@ -52,5 +56,9 @@ export class GithubService {
         )
       )
     );
+  }
+
+  getLoadingStatus(){
+    return this.isLoading$.asObservable();
   }
 }
