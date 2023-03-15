@@ -9,6 +9,8 @@
 ```
 
 2. Install npm dependencies for the Ionic/Angular app and also for NestJS app
+
+Note: Node version > 14.2 required
 ```
     cd fulltimeforce-test
     cd frontend
