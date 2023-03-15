@@ -78,6 +78,7 @@ import { RouterModule } from '@angular/router';
                 *ngFor="let commit of vm.commits"
                 class="ion-margin"
                 button
+                (click)="openCommit(commit.id)"
               >
                 <ion-label text-wrap
                   >{{ commit.message }}
@@ -137,6 +138,12 @@ export class HomeComponent {
 
   loadCommits() {
     this.githubService.refresh();
+  }
+
+  
+  openCommit(id: string) {
+    //In case of building as Mobile APP (android or ios), capacitor plugins should be used
+    window.open(`https://github.com/zezei/fulltimeforce-test/commit/${id}`, '_blank');
   }
 }
 
