@@ -39,6 +39,7 @@
         <ion-row>
           <ion-col size="12">
             <h2>Lists of commits</h2>
+            <small>This will display all the commits of https://github.com/zezei/fulltimeforce-test repository</small>
           </ion-col>
         </ion-row>
         <ion-list *ngIf="vm.isLoading">
@@ -66,8 +67,8 @@
           </ion-item>
         </ion-list>
         <ng-template #triggerRefresh>
-          <ion-item *ngIf="!vm.isLoading">
-            <ion-label text-wrap
+          <ion-item *ngIf="!vm.isLoading" lines="none">
+            <ion-label text-wrap class="ion-text-center"
               >To obtain the commits please click on refresh button
               <ion-icon name="refresh-outline"></ion-icon
             ></ion-label>

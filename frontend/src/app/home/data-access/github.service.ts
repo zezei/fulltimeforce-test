@@ -10,6 +10,7 @@ import {
   switchMap,
   tap,
 } from 'rxjs';
+import { GuiService } from 'src/app/shared/services/gui.service';
 
 export interface Commit {
   message: string;
@@ -21,7 +22,7 @@ export interface Commit {
 export class GithubService {
   refresh$ = new BehaviorSubject<boolean>(false);
   isLoading$ = new BehaviorSubject<boolean>(false);
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private guiService: GuiService) {}
 
   private resetStreamToDefaultValues() {
     this.refresh$.next(false);
@@ -31,7 +32,7 @@ export class GithubService {
     return this.refresh$.pipe(
       filter((refresh) => !!refresh),
       tap(() => this.isLoading$.next(true)),
-      delay(1000),
+      delay(1000), //TODO: Remove for production
       switchMap(() =>
         this.http.get<Commit[]>('http://localhost:3000/github/commits').pipe(
           tap({
@@ -43,6 +44,7 @@ export class GithubService {
 
               //TODO: Display toast error message
             console.log('error ', err)
+            this.guiService.alertToast(err.error.message, 2500)
               this.resetStreamToDefaultValues();
             },
           }),
