@@ -35,7 +35,9 @@ import { RouterModule } from '@angular/router';
           size-lg="6"
           offset-lg="3"
         >
-          <img src="/assets/github-commits.jpg" class="bg-img" />
+          <div class="bg-img">
+            <img src="/assets/github-commits.jpg" />
+          </div>
         </ion-col>
         <ion-col
           size="12"
@@ -109,14 +111,18 @@ import { RouterModule } from '@angular/router';
       }
 
       .bg-img {
-        border-radius: 25px;
-        margin-top: auto;
-        height: 200px;
-        width: 100% !important;
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        img {
+          max-width: 300px !important;
+          border-radius: 25px;
+        }
         @media (min-width: 576px) {
           margin-top: 10px;
           /* height: 200px !important; */
         }
+
       }
     `,
   ],
@@ -140,10 +146,12 @@ export class HomeComponent {
     this.githubService.refresh();
   }
 
-  
   openCommit(id: string) {
     //In case of building as Mobile APP (android or ios), capacitor plugins should be used
-    window.open(`https://github.com/zezei/fulltimeforce-test/commit/${id}`, '_blank');
+    window.open(
+      `https://github.com/zezei/fulltimeforce-test/commit/${id}`,
+      '_blank'
+    );
   }
 }
 
