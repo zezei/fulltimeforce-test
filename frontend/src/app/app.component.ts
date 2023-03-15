@@ -37,10 +37,11 @@ export class AppComponent {
             import('./home/home.component').then((m) => m.HomeComponentModule),
         },
         {
-          path: '',
+          path: '**',
           redirectTo: 'home',
           pathMatch: 'full',
         },
+        
       ],
       { preloadingStrategy: PreloadAllModules }
     ),

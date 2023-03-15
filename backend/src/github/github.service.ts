@@ -30,10 +30,12 @@ export class GithubService {
     private readonly httpService: HttpService,
   ) {}
   fetchCommits() {
-    //Note: this can be refactor and move the logic inside a
-    //try catch and then use a DTO to seralize the response
-    //But for this simple API, i think RXJS make it simpler for this case
+    /*Note: this can be refactor and move the logic inside a
+    try catch and then use a DTO to seralize the response
+    But for this simple API, i think RXJS make it simpler for this case
+    */
     return this.httpService.get(this.COMMITS_URL).pipe(
+      //Throw exception in case of error -> try refresh >60 times and will fail
       catchError((err) => {
         throw new HttpException(
           err.response?.data?.message || 'Contact the server admin',

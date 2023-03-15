@@ -15,7 +15,7 @@ import { RouterModule } from '@angular/router';
           <img src="/assets/fulltimeforcelogo.png" />
         </ion-avatar>
         <ion-title class="ion-text-center">Testing APP </ion-title>
-        <ion-buttons slot="end" >
+        <ion-buttons slot="end">
           <ion-button (click)="loadCommits()" color="primary">
             <ion-icon name="refresh-outline"></ion-icon>
             Refresh
@@ -51,8 +51,8 @@ import { RouterModule } from '@angular/router';
               <ion-col size="12">
                 <h2>Lists of commits</h2>
                 <small
-                  >Commits of
-                  https://github.com/zezei/fulltimeforce-test repository. Click on one to see more details.</small
+                  >Commits of https://github.com/zezei/fulltimeforce-test
+                  repository. Click on one to see more details.</small
                 >
               </ion-col>
             </ion-row>
@@ -71,8 +71,14 @@ import { RouterModule } from '@angular/router';
                 ></ion-label>
               </ion-item>
             </ion-list>
-            <ion-list *ngIf="vm.commits.length && !vm.isLoading; else triggerRefresh">
-              <ion-item *ngFor="let commit of vm.commits" class="ion-margin" button>
+            <ion-list
+              *ngIf="vm.commits.length && !vm.isLoading; else triggerRefresh"
+            >
+              <ion-item
+                *ngFor="let commit of vm.commits"
+                class="ion-margin"
+                button
+              >
                 <ion-label text-wrap
                   >{{ commit.message }}
                   <p>{{ commit.date | date : 'dd/MM/YYYY HH:MM' }}</p>
@@ -115,6 +121,12 @@ import { RouterModule } from '@angular/router';
   ],
 })
 export class HomeComponent {
+  /*
+  If the application grows in size, 
+  the ideal would be to create dumb components to 
+  display information only and smart components for the logic
+*/
+
   githubCommits$: Observable<Commit[]> = this.githubService.getCommits();
 
   vm$ = combineLatest([
@@ -124,9 +136,8 @@ export class HomeComponent {
   constructor(private githubService: GithubService) {}
 
   loadCommits() {
-    this.githubService.refresh()
+    this.githubService.refresh();
   }
-
 }
 
 @NgModule({
@@ -142,6 +153,6 @@ export class HomeComponent {
     ]),
   ],
   declarations: [HomeComponent],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class HomeComponentModule {}

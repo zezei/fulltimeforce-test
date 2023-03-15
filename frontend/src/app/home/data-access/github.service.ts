@@ -33,6 +33,7 @@ export class GithubService {
     this.refresh$.next(true);
   }
   getCommits() {
+    //This will trigger everytime the refresh stream emits new value
     return this.refresh$.pipe(
       filter((refresh) => !!refresh),
       tap(() => this.isLoading$.next(true)),
@@ -42,7 +43,6 @@ export class GithubService {
           tap({
             next: () => {
               this.resetStreamToDefaultValues();
-              console.log(this.refresh$.value);
             },
             error: (err) => {
               //TODO: Display toast error message
