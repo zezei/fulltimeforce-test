@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Commit, GithubService } from './data-access/github.service';
 
 @Component({
   selector: 'app-home',
@@ -7,6 +9,8 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
 
-  constructor() {}
+  githubCommits$: Observable<Commit[]> = this.githubService.getCommits();
+
+  constructor(private githubService: GithubService) {}
 
 }
