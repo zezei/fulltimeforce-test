@@ -41,14 +41,14 @@ export class GithubService {
               console.log(this.refresh$.value);
             },
             error: (err) => {
-
               //TODO: Display toast error message
-            console.log('error ', err)
-            this.guiService.alertToast(err.error.message, 2500)
+              console.log('error ', err);
+              this.guiService.alertToast(err.error.message, 2500);
               this.resetStreamToDefaultValues();
             },
           }),
-          catchError(() => EMPTY),
+          //This will avoid stream from braking
+          catchError(() => EMPTY)
         )
       )
     );
