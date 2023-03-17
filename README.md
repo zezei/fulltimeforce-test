@@ -14,6 +14,8 @@
 
 5. Following branch-per-issue model
 
+6. I am Serving the Angular app inside the public folder of NestJS APP and this offers several advantages, including simpler deployment by bundling both server-side and client-side code as a single unit, single domain to avoid cross-domain issues, etc..
+
 # Installation Steps
 
 1. Clone repository
