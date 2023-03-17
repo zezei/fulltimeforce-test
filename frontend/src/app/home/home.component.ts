@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { combineLatest, map, Observable, startWith } from 'rxjs';
 import { Commit, GithubService } from './data-access/github.service';
 import { NgModule } from '@angular/core';
@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 
 import { RouterModule } from '@angular/router';
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <ion-header [translucent]="true" class="ion-no-border">
       <ion-toolbar class="ion-no-border">
