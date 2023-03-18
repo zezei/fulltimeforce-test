@@ -14,7 +14,7 @@
 
 5. Following branch-per-issue model
 
-6. I am Serving the Angular app inside the public folder of NestJS APP and this offers several advantages, including simpler deployment by bundling both server-side and client-side code as a single unit, single domain to avoid cross-domain issues, etc..
+6. The frontend Angular/Ionic application is being compiled inside the public directory of the NestJS app, which means that the frontend and backend applications can be served from the same server. This setup allows us to easily deploy and manage the entire application as a single unit. To access the frontend app, all that is necessary is to run the NestJS app, which will serve both the backend API and the compiled frontend assets from the same server. This approach simplifies the deployment process and allows us to focus on developing and maintaining the application as a whole
 
 # Installation Steps
 
